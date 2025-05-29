@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7
+    container_name: jobquit-redis
+    networks:
+      - jobquit-net
+
+  jobquit:
+    build: .
+    container_name: jobquit-app
+    ports:
+      - "8089:8080"
+    depends_on:
+      - redis
+    networks:
+      - jobquit-net
+
+networks:
+  jobquit-net:
+    driver: bridge
